@@ -43,7 +43,7 @@
                 // Etape 1: récupérer l'id de l'utilisateur
                 $userId = intval($_GET['user_id']);
                 // Etape 2: se connecter à la base de donnée
-                include("fonction.php");
+                include("fonctions.php");
                 // Etape 3: récupérer le nom de l'utilisateur
                 $laQuestionEnSql = "
                     SELECT users.* 
@@ -53,14 +53,28 @@
                     GROUP BY users.id
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
+
+                if ( ! $lesInformations)
+                {
+                    echo "<article>";
+                    echo("Échec de la requete : " . $mysqli->error);
+                    echo("<p>Indice: Vérifiez la requete  SQL suivante dans phpmyadmin<code>$laQuestionEnSql</code></p>");
+                    exit();
+                }
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
-                ?>
+               
+                while ($user = $lesInformations->fetch_assoc())
+                {
+                    //echo "<pre>" . print_r($user, 1) . "</pre>";
+               ?>
+
                 <article>
                     <img src="user.jpg" alt="blason"/>
-                    <h3>Alexandra</h3>
-                    <p>id:654</p>                    
+                    <h3><?php echo $user['alias'] ?></h3>
+                    <p>id : <?php echo $user['id'] ?></p>                    
                 </article>
+                <?php } ?>
             </main>
         </div>
     </body>
