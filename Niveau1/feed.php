@@ -38,10 +38,9 @@
             $userId = intval($_GET['user_id']);
             ?>
             <?php
-            /**
-             * Etape 2: se connecter à la base de donnée
-             */
-            $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+
+            include("fonctions.php");
+          
             ?>
 
             <aside>
