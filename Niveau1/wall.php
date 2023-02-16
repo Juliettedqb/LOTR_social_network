@@ -48,11 +48,18 @@
                 </section>
                 <?php 
                     // CHECK IF IS ALREADY FOLLOWED
-                    $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
+                    // on selectionne la ligne de la table followers correspondant à la session en cours ($idU) 
+                    $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $idU . "' ";
+                    // envoyer la requête et stocker dans la variable '$lesInformations'
                     $lesInformations = $mysqli->query($laQuestionEnSql);
+                    // isFollowed sera remplie à condition qu'il y ait une ligne de trouvée 
                     $isFollowed = $lesInformations->fetch_assoc();
+                    // pour visualiser isFollowed:
+                    /* echo "<pre>" . print_r($isFollowed, 1) . "</pre>"; */
+
                     // FOLLOW BUTTON
-                    if (isset($idU) AND $userId != $idU AND !$isFollowed) { ?> 
+                    // pour pas pouvoir se follow soi-même et si ($idU) existe
+                    if (isset($idU) AND $userId != $idU AND !$isFollowed) { ?>
                         <form action="wall.php?user_id=<?php echo $userId?>" method="post">
                                 <input type="hidden" name="Follow" value= "True">
                                 <input type='submit' value= "Follow"> 
@@ -78,7 +85,7 @@
                             ."(id, followed_user_id, following_user_id)" 
                             . "VALUES (NULL, "
                             . $userId . ", "
-                            . "'" . $_SESSION['connected_id'] . "')"
+                            . "'" . $idU . "')"
                             ;
                         $ok = $mysqli->query($suivreUnePersonne);
                         if (!$ok) {
@@ -92,7 +99,7 @@
                     // UNFOLLOW PART
                     $enCoursUnFollow = isset($_POST['unFollow']);
                     if ($enCoursUnFollow) {
-                        $unFollow = "DELETE FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
+                        $unFollow = "DELETE FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $idU . "' ";
                         $ok = $mysqli->query($unFollow);
                         if (!$ok) {
                             echo("Échec de la requete : " . $mysqli->error);
@@ -133,9 +140,42 @@
                         <input type='submit'>
                     </form>               
                 </article>
+
+
+
+
+
+
+                <!-- LIKE PART -->
+                <?php
+                    $isLiked = isset($_POST['like']);
+                    $postId = isset($_POST['postId']);
+                    if ($isLiked) {
+                        $likedPost = "INSERT INTO likes "
+                            ."(id, user_id, post_id)" 
+                            . "VALUES (NULL, "
+                            . $idU . ", "
+                            . $postId . ")"
+                            ;
+                        $ok = $mysqli->query($likedPost);
+                        if (!$ok) {
+                            echo("Échec de la requete : " . $mysqli->error);
+                        } else {
+                            echo("Vous aimez cette publication!");
+                            /* header("Refresh:0"); */
+                        }
+                    }
+                ?>
+
+
+
+
+
+
+
                 <?php
                     $laQuestionEnSql = "
-                        SELECT posts.content, posts.created, users.alias as author_name, users.id as author_id, 
+                        SELECT posts.content, posts.created, posts.id, users.alias as author_name, users.id as author_id, 
                         COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                         FROM posts
                         JOIN users ON  users.id=posts.user_id
@@ -151,7 +191,7 @@
                         echo("Échec de la requete : " . $mysqli->error);
                     }
                     while ($post = $lesInformations->fetch_assoc()) {
-                        //echo "<pre>" . print_r($post, 1) . "</pre>";?>                
+                        echo "<pre>" . print_r($post, 1) . "</pre>";?>                
                         <article>
                             <h3>
                                 <time datetime='2020-02-01 11:12:13' ><?php echo $post['created'] ?></time>
@@ -161,7 +201,16 @@
                                 <p><?php echo $post['content'] ?></p>
                             </div>                                            
                             <footer>
-                                <small>♥ <?php echo $post['like_number'] ?></small>
+                            <small>
+                                <small>♥ 
+                                    <?php echo $post['like_number'] ?> likes
+                                </small>
+                                <form action="" method="post">
+                                    <input type="hidden" name="like" value= "True">
+                                    <input type="hidden" name="postId" value= "<?php echo $post['id']?>">
+                                    <input type='submit' value= "like"> 
+                                </form>
+                            </small>  
                                 <a href="">#<?php echo $post['taglist'] ?></a>,
                             </footer>
                         </article>
