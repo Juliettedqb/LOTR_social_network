@@ -17,30 +17,19 @@
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez les informations de l'utilisatrice
+                    <p>Sur cette page vous trouverez les informations de l'utilisateur.ice
                         n° <?php echo intval($_GET['user_id']) ?></p>
 
                 </section>
             </aside>
             <main>
                 <?php
-                /**
-                 * Etape 1: Les paramètres concernent une utilisatrice en particulier
-                 * La première étape est donc de trouver quel est l'id de l'utilisatrice
-                 * Celui ci est indiqué en parametre GET de la page sous la forme user_id=...
-                 * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
-                 * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
-                 */
+
                 $userId = intval($_GET['user_id']);
 
-                /**
-                 * Etape 2: se connecter à la base de donnée
-                 */
                 include("fonctions.php");
 
-                /**
-                 * Etape 3: récupérer le nom de l'utilisateur
-                 */
+                //on récupère le nom de l'utilisateur.ice
                 $laQuestionEnSql = "
                     SELECT users.*, 
                     count(DISTINCT posts.id) as totalpost, 
@@ -59,11 +48,8 @@
                     echo("Échec de la requete : " . $mysqli->error);
                 }
                 $user = $lesInformations->fetch_assoc();
-
-                /**
-                 * Etape 4: à vous de jouer
-                 */
-                //@todo: afficher le résultat de la ligne ci dessous, remplacer les valeurs ci-après puiseffacer la ligne ci-dessous
+                
+                //debug :
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>                
                 <article class='parameters'>
