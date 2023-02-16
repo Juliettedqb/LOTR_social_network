@@ -70,9 +70,9 @@
                     /* echo "<pre>" . print_r($_POST, 1) . "</pre>"; */
                     // et complétez le code ci dessous en remplaçant les ???
                     $authorId = $idU;
-                    $postContent = $_POST['message'];
-                    $enCoursDeTraitement = isset($postContent);
+                    $enCoursDeTraitement = isset($_POST['message']);
                     if ($enCoursDeTraitement) {
+                        $postContent = $_POST['message'];
                         //Etape 3 : Petite sécurité
                         // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
                         $authorId = intval($mysqli->real_escape_string($authorId));
@@ -92,7 +92,7 @@
                         if ( ! $ok) {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else {
-                            echo "Message posté en tant que :" . $listAuteurs[$authorId];
+                            echo "Message posté en tant que :" . $authorId;
                         }
                     }
                     ?>                     
