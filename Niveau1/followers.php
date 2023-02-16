@@ -9,6 +9,7 @@
     <body>
         <?php 
             include "./header.php";
+            include("fonctions.php");
         ?>
         <div id="wrapper">          
             <aside>
@@ -23,38 +24,26 @@
             </aside>
             <main class='contacts'>
                 <?php
-
-                //etape1 : connexion bdd
-
-                include("fonctions.php");
-
-                // Etape 2: récupérer l'id de l'utilisateur
-                $userId = intval($_GET['user_id']);
-                // Etape 3: récupérer le nom de l'utilisateur
-                $laQuestionEnSql = "
-                    SELECT users.*
-                    FROM followers
-                    LEFT JOIN users ON users.id=followers.following_user_id
-                    WHERE followers.followed_user_id='$userId'
-                    GROUP BY users.id
-                    ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                // Etape 4: à vous de jouer
-                //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
-                
-                while ($user = $lesInformations->fetch_assoc())
-                {
-                    //echo "<pre>" . print_r($user, 1) . "</pre>";
-                ?>
-                <article>
-                    <img src="user.jpg" alt="blason"/>
-                    <h3>
-                        <a href="wall.php?user_id=<?php echo $user['id'] ?>">
-                            <?php echo $user['alias'] ?>
-                        </a>
-                    </h3>
-                    <p>id : <?php echo $user['id'] ?></p>
-                </article>
+                    $userId = intval($_GET['user_id']);
+                    $laQuestionEnSql = "
+                        SELECT users.*
+                        FROM followers
+                        LEFT JOIN users ON users.id=followers.following_user_id
+                        WHERE followers.followed_user_id='$userId'
+                        GROUP BY users.id
+                        ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    while ($user = $lesInformations->fetch_assoc()) {
+                        //echo "<pre>" . print_r($user, 1) . "</pre>"; ?>
+                        <article>
+                            <img src="user.jpg" alt="blason"/>
+                            <h3>
+                                <a href="wall.php?user_id=<?php echo $user['id'] ?>">
+                                    <?php echo $user['alias'] ?>
+                                </a>
+                            </h3>
+                            <p>id : <?php echo $user['id'] ?></p>
+                        </article>
                 <?php } ?>
             </main>
         </div>
