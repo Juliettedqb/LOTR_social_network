@@ -45,39 +45,71 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                         (n° <?php echo $userId ?>)
                     </p>
-                    <a href="wall.php?user_id=3">
-                        <button>Follow</button>
-                    </a>
                 </section>
+                <?php 
+                    // CHECK IF IS ALREADY FOLLOWED
+                    $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    $isFollowed = $lesInformations->fetch_assoc();
+
+                    // FOLLOW BUTTON
+                    if (isset ($idU) AND $userId != $idU AND !$isFollowed) { ?> 
+                        <form action="wall.php?user_id=<?php echo $userId?>" method="post">
+                                <input type="hidden" name="Follow" value= "True">
+                                <input type='submit' value= "Follow"> 
+                        </form> <?php 
+                    } else if($isFollowed) { ?>
+                        <form action="wall.php?user_id=<?php echo $userId?>" method="post">
+                                <input type="hidden" name="unFollow" value= "True">
+                                <input type='submit' value= "unFollow"> 
+                        </form> <?php 
+                    } else {
+                        echo "Vous ne pouvez pas vous suivre vous même";
+                    } ?>
             </aside>
             <main>
             <article>
                     <h2>Poster un message</h2>
                     <?php
-                    /**
-                     * BDj
-                     */
-                    $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
-                    /**
-                     * TRAITEMENT DU FORMULAIRE
-                     */
-                    // Etape 1 : vérifier si on est en train d'afficher ou de traiter le formulaire
-                    // si on recoit un champs email rempli il y a une chance que ce soit un traitement
-                    // on ne fait ce qui suit que si un formulaire a été soumis.
 
-                    // Etape 2: récupérer ce qu'il y a dans le formulaire @todo: c'est là que votre travaille se situe
-                    // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
-                    /* echo "<pre>" . print_r($_POST, 1) . "</pre>"; */
-                    // et complétez le code ci dessous en remplaçant les ???
+                    // FOLLOW PART
+                    $enCoursFollow = isset($_POST['Follow']);
+                    if ($enCoursFollow) {
+                        $suivreUnePersonne = "INSERT INTO followers "
+                            ."(id, followed_user_id, following_user_id)" 
+                            . "VALUES (NULL, "
+                            . $userId . ", "
+                            . "'" . $_SESSION['connected_id'] . "')"
+                            ;
+                        $ok = $mysqli->query($suivreUnePersonne);
+                        if (!$ok) {
+                            echo("Échec de la requete : " . $mysqli->error);
+                        } else {
+                            echo("Vous suivez cette personne !");
+                            header("Refresh:0");
+                        }
+                    }
+
+                    // UNFOLLOW PART
+                    $enCoursUnFollow = isset($_POST['unFollow']);
+                    if ($enCoursUnFollow) {
+                        $unFollow = "DELETE FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
+                        $ok = $mysqli->query($unFollow);
+                        if (!$ok) {
+                            echo("Échec de la requete : " . $mysqli->error);
+                        } else {
+                            echo("Vous ne suivez plus cette personne !");
+                            header("Refresh:0");
+                        }
+                    }
+
+                    // POST MESSAGE PART
                     $authorId = $idU;
                     $enCoursDeTraitement = isset($_POST['message']);
                     if ($enCoursDeTraitement) {
                         $postContent = $_POST['message'];
-                        //Etape 3 : Petite sécurité
-                        // pour éviter les injection sql : https://www.w3schools.com/sql/sql_injection.asp
                         $authorId = intval($mysqli->real_escape_string($authorId));
                         $postContent = $mysqli->real_escape_string($postContent);
-                        //Etape 4 : construction de la requete
                         $lInstructionSql = "INSERT INTO posts "
                                 . "(id, user_id, content, created, parent_id) "
                                 . "VALUES (NULL, "
@@ -86,10 +118,8 @@
                                 . "NOW(), "
                                 . "NULL);"
                                 ;
-                        /* echo $lInstructionSql; */
-                        // Etape 5 : execution
                         $ok = $mysqli->query($lInstructionSql);
-                        if ( ! $ok) {
+                        if (!$ok) {
                             echo "Impossible d'ajouter le message: " . $mysqli->error;
                         } else {
                             echo "Message posté en tant que :" . $authorId;
@@ -105,51 +135,38 @@
                     </form>               
                 </article>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages de l'utilisatrice
-                 */
-                $laQuestionEnSql = "
-                    SELECT posts.content, posts.created, users.alias as author_name, users.id as author_id, 
-                    COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
-                    FROM posts
-                    JOIN users ON  users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE posts.user_id='$userId' 
-                    GROUP BY posts.id
-                    ORDER BY posts.created DESC  
-                    ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                if ( ! $lesInformations)
-                {
-                    echo("Échec de la requete : " . $mysqli->error);
-                }
-
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 */
-                while ($post = $lesInformations->fetch_assoc())
-                {
-
-                    //echo "<pre>" . print_r($post, 1) . "</pre>";
-                    ?>                
-                    <article>
-                        <h3>
-                            <time datetime='2020-02-01 11:12:13' ><?php echo $post['created'] ?></time>
-                        </h3>
-                        <address>par <?php echo $post['author_name'] ?></address>
-                        <div>
-                            <p><?php echo $post['content'] ?></p>
-                        </div>                                            
-                        <footer>
-                            <small>♥ <?php echo $post['like_number'] ?></small>
-                            <a href="">#<?php echo $post['taglist'] ?></a>,
-                        </footer>
-                    </article>
+                    $laQuestionEnSql = "
+                        SELECT posts.content, posts.created, users.alias as author_name, users.id as author_id, 
+                        COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                        FROM posts
+                        JOIN users ON  users.id=posts.user_id
+                        LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                        LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                        LEFT JOIN likes      ON likes.post_id  = posts.id 
+                        WHERE posts.user_id='$userId' 
+                        GROUP BY posts.id
+                        ORDER BY posts.created DESC  
+                        ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    if ( ! $lesInformations) {
+                        echo("Échec de la requete : " . $mysqli->error);
+                    }
+                    while ($post = $lesInformations->fetch_assoc()) {
+                        //echo "<pre>" . print_r($post, 1) . "</pre>";?>                
+                        <article>
+                            <h3>
+                                <time datetime='2020-02-01 11:12:13' ><?php echo $post['created'] ?></time>
+                            </h3>
+                            <address>par <?php echo $post['author_name'] ?></address>
+                            <div>
+                                <p><?php echo $post['content'] ?></p>
+                            </div>                                            
+                            <footer>
+                                <small>♥ <?php echo $post['like_number'] ?></small>
+                                <a href="">#<?php echo $post['taglist'] ?></a>,
+                            </footer>
+                        </article>
                 <?php } ?>
-
-
             </main>
         </div>
     </body>
