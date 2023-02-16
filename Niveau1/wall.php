@@ -23,7 +23,7 @@
             ?>
             <?php
             /**
-             * Etape 2: se idUer à la base de donnée
+             * Etape 2: idUser à la base de donnée
              */
             include("fonctions.php");
             ?>
@@ -45,6 +45,9 @@
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
                         (n° <?php echo $userId ?>)
                     </p>
+                    <a href="wall.php?user_id=3">
+                        <button>Follow</button>
+                    </a>
                 </section>
             </aside>
             <main>
