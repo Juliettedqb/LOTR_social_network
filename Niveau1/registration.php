@@ -73,6 +73,7 @@
                         {
                             echo "Votre inscription est un succès : " . $new_alias;
                             echo " <a href='login.php'>Connectez-vous.</a>";
+                            header("Location: login.php?user_id= " . $_SESSION['connected_id']);
                         }
                     }
                     ?>                     

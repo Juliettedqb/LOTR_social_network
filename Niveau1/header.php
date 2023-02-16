@@ -23,6 +23,7 @@
             <li><a href="settings.php?user_id=<?php echo $idU ?>">Paramètres</a></li>
             <li><a href="followers.php?user_id=<?php echo $idU ?>">Mes suiveurs</a></li>
             <li><a href="subscriptions.php?user_id=<?php echo $idU ?>">Mes abonnements</a></li>
+            <li><a href="disconnect.php">Disconnect</a></li>
         </ul>
     </nav>
 </header>
