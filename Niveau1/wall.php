@@ -39,7 +39,7 @@
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
                 //echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
-                <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
+                <img src="./assets/user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?>
@@ -51,9 +51,8 @@
                     $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
                     $lesInformations = $mysqli->query($laQuestionEnSql);
                     $isFollowed = $lesInformations->fetch_assoc();
-
                     // FOLLOW BUTTON
-                    if (isset ($idU) AND $userId != $idU AND !$isFollowed) { ?> 
+                    if (isset($idU) AND $userId != $idU AND !$isFollowed) { ?> 
                         <form action="wall.php?user_id=<?php echo $userId?>" method="post">
                                 <input type="hidden" name="Follow" value= "True">
                                 <input type='submit' value= "Follow"> 

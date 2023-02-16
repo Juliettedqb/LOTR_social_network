@@ -13,7 +13,7 @@
         ?>
         <div id="wrapper">          
             <aside>
-                <img src = "user.jpg" alt = "Portrait de l'utilisatrice"/>
+                <img src="./assets/user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez la liste des personnes qui
@@ -36,7 +36,7 @@
                     while ($user = $lesInformations->fetch_assoc()) {
                         //echo "<pre>" . print_r($user, 1) . "</pre>"; ?>
                         <article>
-                            <img src="user.jpg" alt="blason"/>
+                            <img src="./assets/user.jpg" alt="Portrait de l'utilisatrice"/>
                             <h3>
                                 <a href="wall.php?user_id=<?php echo $user['id'] ?>">
                                     <?php echo $user['alias'] ?>
