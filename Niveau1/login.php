@@ -59,7 +59,7 @@
                             } else {
                                 echo "Votre connexion est un succès : " . $user['alias'] . ".";
                                 $_SESSION['connected_id']=$user['id'];
-                                header("Location: feed.php?user_id= " . $_SESSION['connected_id']);
+                                header("Location: wall.php?user_id= " . $_SESSION['connected_id']);
                             }
                         }
                     ?>                     

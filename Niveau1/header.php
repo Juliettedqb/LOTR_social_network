@@ -12,18 +12,38 @@
 <header>
     <img src="./assets/LOTR/gollumLogo2.webp" alt="Logo de notre réseau social"/>
     <nav id="menu">
-        <a href="news.php">Actualités</a>
-        <a href="wall.php?user_id=<?php echo $idU ?>">Mur</a>
-        <a href="feed.php?user_id=<?php echo $idU ?>">Flux</a>
-        <a href="tags.php?tag_id=1">Mots-clés</a>
+        <a href="news.php">News</a>
+        <a href="wall.php?user_id=<?php echo $idU ?>">My Page</a>
+        <!-- RESEARCH BAR -->
+        <a>
+            <form action="" method="post">
+                <input type="text" name="search" placeholder="Rechercher un utilisateur">
+                <input type="submit" value="Rechercher">
+            </form>
+        </a>
     </nav>
     <nav id="user">
         <a href="#">Profil</a>
         <ul>
             <li><a href="settings.php?user_id=<?php echo $idU ?>">Paramètres</a></li>
-            <li><a href="followers.php?user_id=<?php echo $idU ?>">Mes suiveurs</a></li>
-            <li><a href="subscriptions.php?user_id=<?php echo $idU ?>">Mes abonnements</a></li>
             <li><a href="disconnect.php">Disconnect</a></li>
         </ul>
     </nav>
 </header>
+
+<?php
+include("fonctions.php");
+// PART SEARCH
+
+if (isset($_POST['search'])) {
+    $search = $_POST['search'];
+    $laQuestionEnSql = "SELECT * FROM `users` WHERE alias= '$search' ";
+    $lesInformations = $mysqli->query($laQuestionEnSql);
+    $user = $lesInformations->fetch_assoc();
+    if ($user) {
+        header("Location: wall.php?user_id=" . $user['id']);
+    } else {
+        echo "This user was not found" . " :" . $search;
+    }
+}
+?>

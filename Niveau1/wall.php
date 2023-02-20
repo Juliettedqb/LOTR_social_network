@@ -68,6 +68,30 @@
             } else {
                 echo "Vous ne pouvez pas vous suivre vous-même";
             } ?>
+             <!-- Number of posts -->
+             <p>Nombre de message :
+                <?php
+                $laQuestionEnSql = "SELECT * FROM posts WHERE user_id= '$userId' ";
+                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $nbPosts = $lesInformations->num_rows;
+                ?>
+                <a><?php echo $nbPosts ?></a>
+            <!-- Number of following -->
+            <p>Nombre d'abonnement :
+                <?php
+                $laQuestionEnSql = "SELECT * FROM followers WHERE following_user_id= '$userId' ";
+                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $nbFollowing = $lesInformations->num_rows;
+                ?>
+                <a href="./subscriptions.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowing ?></a>
+                <!-- Number of followed -->
+            <p>Nombre d'abonné :
+                <?php
+                $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' ";
+                $lesInformations = $mysqli->query($laQuestionEnSql);
+                $nbFollowed = $lesInformations->num_rows;
+                ?>
+                <a href="./followers.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowed ?></a>
         </aside>
         <main>
             <article>
