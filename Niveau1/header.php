@@ -10,7 +10,7 @@
 ?>
 
 <header>
-    <img src="./assets/resoc.jpg" alt="Logo de notre réseau social"/>
+    <img src="./assets/LOTR/gollumLogo2.webp" alt="Logo de notre réseau social"/>
     <nav id="menu">
         <a href="news.php">Actualités</a>
         <a href="wall.php?user_id=<?php echo $idU ?>">Mur</a>

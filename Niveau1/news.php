@@ -14,7 +14,8 @@
     ?>
     <div id="wrapper">
         <aside>
-            <img src="./assets/user.jpg" alt="Portrait de l'utilisatrice" />
+
+            <img src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez les derniers messages de
@@ -68,9 +69,10 @@
                         SELECT posts.content,
                         posts.created,
                         posts.id,
-                        users.alias as author_name, 
-                        users.id as author_id,  
-                        count(likes.id) as like_number,  
+                        users.alias AS author_name, 
+                        users.id AS author_id,  
+                        users.image AS author_image,
+                        count(likes.id) AS like_number,  
                         GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                         FROM posts
                         JOIN users ON  users.id=posts.user_id
@@ -90,8 +92,15 @@
             }
 
             while ($post = $lesInformations->fetch_assoc()) {
-                // echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
+                echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
                 <article>
+                    <img id="osef" src="<?php echo $post['author_image'] ?>" alt="blason" />
+                    <style>
+                        #osef {
+                            float:right;
+                            height: 5em;
+                        }
+                    </style>
                     <h3>
                         <time>
                             <?php echo $post['created'] ?>
