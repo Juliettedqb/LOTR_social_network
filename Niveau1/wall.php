@@ -52,7 +52,7 @@
                     $lesInformations = $mysqli->query($laQuestionEnSql);
                     $nbPosts = $lesInformations->num_rows;
                     ?>
-                    <a><?php echo $nbPosts ?></a>
+                    <a class="number_follow"><?php echo $nbPosts ?></a>
                 <!-- Number of following -->
                 <p>Nombre d'abonnement :
                     <?php
@@ -60,7 +60,7 @@
                     $lesInformations = $mysqli->query($laQuestionEnSql);
                     $nbFollowing = $lesInformations->num_rows;
                     ?>
-                    <a href="./subscriptions.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowing ?></a>
+                    <a class="number_follow" href="./subscriptions.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowing ?></a>
                     <!-- Number of followed -->
                 <p>Nombre d'abonné :
                     <?php
@@ -68,34 +68,34 @@
                     $lesInformations = $mysqli->query($laQuestionEnSql);
                     $nbFollowed = $lesInformations->num_rows;
                     ?>
-                    <a href="./followers.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowed ?></a>
+                    <a class="number_follow" href="./followers.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowed ?></a>
             </section>
             <?php
             // CHECK IF IS ALREADY FOLLOWED
             $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $_SESSION['connected_id'] . "' ";
             $lesInformations = $mysqli->query($laQuestionEnSql);
             $isFollowed = $lesInformations->fetch_assoc();
-            echo "<pre>" . print_r($isFollowed, 1) . "</pre>";
+            /* echo "<pre>" . print_r($isFollowed, 1) . "</pre>"; */
             // FOLLOW BUTTON
             if (isset($idU) and $userId != $idU and !$isFollowed) { ?>
                 <form action="wall.php?user_id=<?php echo $userId ?>" method="post">
                     <input type="hidden" name="Follow" value="True">
-                    <input type='submit' value="Follow">
+                    <input class="button-55" role="button" type='submit' value="Follow">
                 </form>
             <?php
             } else if ($isFollowed) { ?>
                     <form action="wall.php?user_id=<?php echo $userId ?>" method="post">
                         <input type="hidden" name="unFollow" value="True">
-                        <input type='submit' value="unFollow">
+                        <input class="button-55" role="button" type='submit' value="unFollow">
                     </form>
             <?php
             } else {
-                echo "Vous ne pouvez pas vous suivre vous-même";
+                echo "";
             } ?>
 
         </aside>
         <main>
-            <article>
+            <article class="papier">
                 <h2>Poster un message</h2>
                 <?php
 
@@ -188,7 +188,7 @@
                     <dl><label for='message'>Message</label></dt>
                         <dd><textarea name='message'></textarea></dd>
                     </dl>
-                    <input type='submit'>
+                    <input class="button-55" role="button" type='submit'>
                 </form>
             </article>
             <?php
@@ -211,13 +211,14 @@
                 echo ("Échec de la requete : " . $mysqli->error);
             }
             while ($post = $lesInformations->fetch_assoc()) {
-                 echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
+                 /* echo "<pre>" . print_r($post, 1) . "</pre>"; */ ?>
                 <article>
                 <img id="osef" src="<?php echo $post['author_image'] ?>" alt="blason" />
                 <style>
                         #osef {
                             float:right;
-                            height: 5em;
+                            height: 3.2em;
+                            border-radius:50%;
                         }
                 </style>
                     <h3>
@@ -243,15 +244,15 @@
                             $ok = $mysqli->query($checkLike);
                             if ($ok->num_rows == 0) {
                                 ?>
-                                <form action="" method="post">
+                                <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="Like" value="True">
-                                    <input type='submit' value="Like">
+                                    <input type='submit' value="Like"> 
                                 </form>
                             <?php
                             } else {
                                 ?>
-                                <form action="" method="post">
+                                <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="unLike" value="True">
                                     <input type='submit' value="unLike">

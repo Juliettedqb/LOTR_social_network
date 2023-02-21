@@ -14,8 +14,8 @@
     include("fonctions.php");
     ?>
     <div id="wrapper" class='profile'>
-        <?php 
-            $userId = intval($_GET['user_id']);
+        <?php
+        $userId = intval($_GET['user_id']);
         ?>
 
 
@@ -33,6 +33,41 @@
                     n°
                     <?php echo intval($_GET['user_id']) ?>
                 </p>
+
+                <?php
+                $enCoursNewImage = isset($_POST['newImage']);
+                //echo "<pre>" . print_r($_POST['newImage'], 1) . "</pre>";
+                if ($enCoursNewImage) {
+                    $newImage = "UPDATE users SET image = '" . $_POST['newImage'] . "' WHERE id = '$userId'";
+                    $ok = $mysqli->query($newImage);
+                    if (!$ok) {
+                        echo ("Échec de la requete : " . $mysqli->error);
+                    } else {
+                        header("Refresh:0");
+                    }
+                }
+
+                ?>
+
+                <p>Pour modifier votre photo de profil :
+                <form action="" method="post">
+                    <input type='hidden' name='???' value='achanger'>
+                    <select name="newImage">
+                        <option value="./assets/LOTR/gollum.jpg">Gollum</option>
+                        <option value="./assets/LOTR/legolas.jpg">Legolas</option>
+                        <option value="./assets/LOTR/aragorn.jpg">Aragorn</option>
+                        <option value="./assets/LOTR/arwen.jpg">Arwen</option>
+                        <option value="./assets/LOTR/boromir.jpg">Boromir</option>
+                        <option value="./assets/LOTR/frodon.jpg">Frodon</option>
+                        <option value="./assets/LOTR/galadriel.jpg">Galadriel</option>
+                        <option value="./assets/LOTR/gandalf.jpg">Gandalf</option>
+                        <option value="./assets/LOTR/gimli.jpg">Gimli</option>
+                        <option value="./assets/LOTR/saroumane.jpg">Saroumane</option>
+                    </select>
+                    <input type='submit'>
+                </form>
+                </p>
+
 
             </section>
         </aside>
@@ -94,3 +129,12 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+

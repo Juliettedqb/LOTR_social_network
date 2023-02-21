@@ -101,7 +101,8 @@
                     <style>
                         #osef {
                             float:right;
-                            height: 5em;
+                            height: 3.2em;
+                            border-radius:50%;
                         }
                     </style>
                     <h3>
@@ -117,15 +118,15 @@
                     </div>
                     <footer>
                         <small>
-                            <small>♥
-                                <?php echo $post['like_number'] ?>
+                            <small>
+                            ⚔️<?php echo $post['like_number'] ?>
                             </small>
                             <?php
                             $checkLike = "SELECT * FROM likes WHERE user_id= '" . $_SESSION['connected_id'] . "' AND post_id= '" . $post['id'] . "' ";
                             $ok = $mysqli->query($checkLike);
                             if ($ok->num_rows == 0) {
                                 ?>
-                                <form action="" method="post">
+                                <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="Like" value="True">
                                     <input type='submit' value="Like">
