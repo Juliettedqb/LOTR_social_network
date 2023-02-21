@@ -194,7 +194,8 @@
             <?php
             // SELECT POST ID 
             $laQuestionEnSql = "
-                    SELECT posts.content, posts.created, posts.id, users.alias as author_name, 
+                    SELECT posts.content, posts.created, posts.id, users.alias as author_name,
+                    users.image AS author_image, 
                     COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
@@ -210,8 +211,15 @@
                 echo ("Échec de la requete : " . $mysqli->error);
             }
             while ($post = $lesInformations->fetch_assoc()) {
-                // echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
+                 echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
                 <article>
+                <img id="osef" src="<?php echo $post['author_image'] ?>" alt="blason" />
+                <style>
+                        #osef {
+                            float:right;
+                            height: 5em;
+                        }
+                </style>
                     <h3>
                         <time datetime='2020-02-01 11:12:13'>
                             <?php echo $post['created'] ?>
@@ -252,9 +260,6 @@
                             }
                             ?>
                         </small>
-                        <a href="">#
-                            <?php echo $post['taglist'] ?>
-                        </a>,
                     </footer>
                 </article>
             <?php } ?>

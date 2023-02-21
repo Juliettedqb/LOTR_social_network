@@ -20,6 +20,9 @@
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez les derniers messages de
                     tous les utilisatrices du site.</p>
+                <p>Météo à Nantes :</p>
+                <p id="weather"></p>
+                <p id="weatherIcon"></p>
             </section>
         </aside>
         <main>
@@ -92,7 +95,7 @@
             }
 
             while ($post = $lesInformations->fetch_assoc()) {
-                echo "<pre>" . print_r($post, 1) . "</pre>"; ?>
+                /* echo "<pre>" . print_r($post, 1) . "</pre>"; */ ?>
                 <article>
                     <img id="osef" src="<?php echo $post['author_image'] ?>" alt="blason" />
                     <style>
@@ -106,7 +109,7 @@
                             <?php echo $post['created'] ?>
                         </time>
                     </h3>
-                    <address>par <a href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a></address>
+                    <address>par <a class="post_author" href="wall.php?user_id=<?php echo $post['author_id'] ?>"><?php echo $post['author_name'] ?></a></address>
                     <div>
                         <p>
                             <?php echo $post['content'] ?>
@@ -139,14 +142,14 @@
                             }
                             ?>
                         </small>
-                        <a href="">#
-                            <?php echo $post['taglist'] ?>
-                        </a>,
                     </footer>
                 </article>
             <?php } ?>
         </main>
     </div>
+
+    <script src="script.js"></script>
+
 </body>
 
 </html>
