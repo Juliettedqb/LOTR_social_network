@@ -38,13 +38,37 @@
             //echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
             <img src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
-            <section>
+            <section class="parchemin">
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez tous les message de l'utilisatrice :
                     <?php echo $user['alias'] ?>
                     (n°
                     <?php echo $userId ?>)
                 </p>
+                <!-- Number of posts -->
+                <p>Nombre de message :
+                    <?php
+                    $laQuestionEnSql = "SELECT * FROM posts WHERE user_id= '$userId' ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    $nbPosts = $lesInformations->num_rows;
+                    ?>
+                    <a><?php echo $nbPosts ?></a>
+                <!-- Number of following -->
+                <p>Nombre d'abonnement :
+                    <?php
+                    $laQuestionEnSql = "SELECT * FROM followers WHERE following_user_id= '$userId' ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    $nbFollowing = $lesInformations->num_rows;
+                    ?>
+                    <a href="./subscriptions.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowing ?></a>
+                    <!-- Number of followed -->
+                <p>Nombre d'abonné :
+                    <?php
+                    $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' ";
+                    $lesInformations = $mysqli->query($laQuestionEnSql);
+                    $nbFollowed = $lesInformations->num_rows;
+                    ?>
+                    <a href="./followers.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowed ?></a>
             </section>
             <?php
             // CHECK IF IS ALREADY FOLLOWED
@@ -68,30 +92,7 @@
             } else {
                 echo "Vous ne pouvez pas vous suivre vous-même";
             } ?>
-             <!-- Number of posts -->
-             <p>Nombre de message :
-                <?php
-                $laQuestionEnSql = "SELECT * FROM posts WHERE user_id= '$userId' ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                $nbPosts = $lesInformations->num_rows;
-                ?>
-                <a><?php echo $nbPosts ?></a>
-            <!-- Number of following -->
-            <p>Nombre d'abonnement :
-                <?php
-                $laQuestionEnSql = "SELECT * FROM followers WHERE following_user_id= '$userId' ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                $nbFollowing = $lesInformations->num_rows;
-                ?>
-                <a href="./subscriptions.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowing ?></a>
-                <!-- Number of followed -->
-            <p>Nombre d'abonné :
-                <?php
-                $laQuestionEnSql = "SELECT * FROM followers WHERE followed_user_id= '$userId' ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                $nbFollowed = $lesInformations->num_rows;
-                ?>
-                <a href="./followers.php?user_id=<?php echo $userId ?>"><?php echo $nbFollowed ?></a>
+
         </aside>
         <main>
             <article>
@@ -226,8 +227,8 @@
                     </div>
                     <footer>
                         <small>
-                            <small>♥
-                                <?php echo $post['like_number'] ?>
+                            <small>
+                            ⚔️<?php echo $post['like_number'] ?>
                             </small>
                             <?php
                             $checkLike = "SELECT * FROM likes WHERE user_id= '" . $_SESSION['connected_id'] . "' AND post_id= '" . $post['id'] . "' ";

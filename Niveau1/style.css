@@ -1,80 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@700&display=swap');
+
+/* search */
+
+
+
+
+/* BUTTON */
+.button-62 {
+  background: linear-gradient(to bottom right, #d9d8d8, #626262);
+  border: 0;
+  border-radius: 12px;
+  color: #262626;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 2.5;
+  outline: transparent;
+  padding: 0 1rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-62:not([disabled]):focus {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #d9d8d8, .125rem .125rem 1rem #62626287;
+}
+
+.button-62:not([disabled]):hover {
+  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem #d9d8d8, .125rem .125rem 1rem #62626287;
+}
+
 body{
-    background-color: rgb(148, 148, 180);
+    background-color: #444444;
     font-family: Arial;
 }
 
-a{text-decoration: none; color:black;}
+
+a{text-decoration: none; color:rgb(255, 255, 255);}
 a:hover{text-decoration: underline;}
 
 body>header{
-    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #2c2c2c;
     display:flex;
     width:80em;
     margin:0 auto 2em auto;    
     padding:0;
+    border-bottom-left-radius: 1.5em;
+    border-bottom-right-radius: 1.5em;
 
 }
 body>header img{
-    height:5em;
+    height: 6em;
+    padding-left: 5em;
+    margin-top: 0.2em;
 }
+
+#title{
+    color: #fff;
+    font-size: 3em;
+    font-family: 'Tangerine', cursive;
+    margin: 0em;
+    margin-top: 0.2em;
+    text-shadow: 2px 2px #d7d7d78e;
+}
+
 body>header #menu {
     display:flex;
     width:50%;
     align-items: stretch;
-    border-left: 1px solid #99b;
+    border-left: 1px solid #2c2c2c;
 }
 body>header #menu a{
     flex:1;
     text-align: center;
     padding-top:2em;
-    border-right: 1px solid #99b;
+    border-right: 1px solid #2c2c2c;
+    margin-left: 6em;
 }
 body>header a:hover
 {
-    background-color: #99b;
+    background-color: #2c2c2c;
 }
 body>header ul{list-style: none;}
 body>header #user
 {
     margin-left: auto;
     flex:0.2;
-    border-left: 1px solid #99b;
+    border-left: 1px solid #2c2c2c;
 }
-body>header #user>a{
-    display:block;
+body>header #user>a {
+    display: block;
     text-align: center;
-    padding:2em 0;
-    width:100%;
+    padding: 2em 0;
+    width: 100%;
+    margin-right: 10em;
+    margin-top: 0.5em;
 }
+
 body>header #user ul{ 
     display: none;
     position: absolute;
     padding:0;
     margin:0;
     margin-left:-5em;
-    background-color: #fff;
-    border: 1px solid #99b;
-
+    background-color: #2c2c2c;
+    border: 1px solid #ffffff;
     z-index: 1;
 }
 body>header #user ul li a{
     display:block;
     width:10em;
     padding:1em;
-    border-bottom: 1px solid #99b;
+    border-bottom: 1px solid #2c2c2c;
 }
 body>header #user:hover ul{
     display:block;
 }
 
+.parchemin{
+
+        position: relative;
+        background-image: url(./assets/Parchemin.jpeg);
+        padding: 2rem;
+        text-align: center;
+        max-width: 200px;
+        margin: 1em;
+        margin-left: 1.5em;
+
+}
 
 #wrapper{
+    padding-top: 100px;
+    top: 7em;
     display:flex;    
     width:80em;
     margin:0 auto 2em auto;
 }
 #wrapper aside{
-    background-color: #fff;
+    background-color: #ffffff;
     flex:1;
     padding:1em;
     border-radius: 1em;    
@@ -94,7 +167,7 @@ body>header #user:hover ul{
 #wrapper main article{
     background-color: #fff;
     padding:1em;
-    margin-bottom: 1em ;
+    margin-bottom: 2em ;
     border-radius: 1em;
 }
 #wrapper main article h3{
@@ -159,4 +232,5 @@ pre{
 
 form dl dt{float:left;font-weight: bold;line-height: 1.5em;}
 form dl dd{margin-left:10em;line-height: 1.5em;margin-bottom: 1em}
-form dl dd textarea{width:40em;height: 15em;}
+form dl dd textarea{width:45em;height: 5em ;}
+
