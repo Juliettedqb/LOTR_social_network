@@ -4,7 +4,6 @@ $idU = $_SESSION['connected_id'];
 if (!isset($idU)) {
     header("Location: login.php");
     exit();
-} else {
 }
 ?>
 

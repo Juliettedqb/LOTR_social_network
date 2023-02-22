@@ -25,13 +25,11 @@
         $user = $lesInformations->fetch_assoc();
         ?>
         <aside>
-            <img src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
+            <img class="cercle" src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
             <section>
                 <h3>Présentation</h3>
                 <p>Sur cette page vous trouverez la liste des personnes dont
-                    l'utilisatrice
-                    n°
-                    <?php echo intval($_GET['user_id']) ?>
+                   <?php echo $user['alias'] ?>
                     suit les messages
                 </p>
 
@@ -69,7 +67,7 @@
                 <article>
                     <img src="<?php echo $user['image'] ?>" alt="blason" />
                     <h3>
-                        <a href="wall.php?user_id=<?php echo $user['id'] ?>">
+                        <a class="dark_link" href="wall.php?user_id=<?php echo $user['id'] ?>">
                             <?php echo $user['alias'] ?>
                         </a>
                     </h3>

@@ -38,7 +38,7 @@
         <aside>
             <img class="cercle" src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
             <h2>Présentation</h2>
-            <p>Bienvenu sur notre réseau social... Gollum Book.</p>
+            <p>Bienvenu sur notre réseau social... ✨Gollum Book✨.</p>
         </aside>
         <main>
             <article>
@@ -79,7 +79,7 @@
                     } else {
                         echo "Votre inscription est un succès : " . $new_alias;
                         echo " <a href='login.php'>Connectez-vous.</a>";
-                        header("Location: login.php?user_id= " . $_SESSION['connected_id']);
+                        header("Location: login.php");
                     }
                 }
                 ?>
