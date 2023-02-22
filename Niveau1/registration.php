@@ -9,30 +9,35 @@
 </head>
 
 <body>
-    <header>
-        <img src="./assets/resoc.jpg" alt="Logo de notre réseau social" />
-        <nav id="menu">
-            <a href="news.php">Actualités</a>
-            <a href="wall.php?user_id=">Mur</a>
-            <a href="feed.php?user_id=">Flux</a>
-            <a href="tags.php?tag_id=">Mots-clés</a>
-        </nav>
-        <nav id="user">
-            <a href="#">Profil</a>
-            <ul>
-                <li><a href="settings.php?user_id=">Paramètres</a></li>
-                <li><a href="followers.php?user_id=">Mes suiveurs</a></li>
-                <li><a href="subscriptions.php?user_id=">Mes abonnements</a></li>
-            </ul>
-
-        </nav>
-    </header>
-
+<header>
+    <img src="./assets/LOTR/gollumLogo2.webp" alt="Logo de notre réseau social"/>
+    
+    <nav id="menu">
+        <p id=title>Gollum <br>Book</p>
+        <a href="news.php"><button class="button-62" role="button">News</button></a>
+        <a href="wall.php?user_id=<?php echo $idU ?>"><button class="button-62" role="button">My Page</button></a>
+        <!-- RESEARCH BAR -->
+        <a class="search-a">
+            <form id= "searchbox" action="" method="post">
+                <input class="research" type="text" size= "40" name="search" placeholder=" Rechercher un utilisateur">
+                <input class="button-submit" type="submit" value="🔍">
+            </form>
+        </a>
+    </nav>
+    <nav id="user">
+        <a href="#">Profil ▼</a>
+        <ul>
+            <li><a href="settings.php?user_id=<?php echo $idU ?>">Paramètres</a></li>
+            <li><a href="disconnect.php">Disconnect</a></li>
+        </ul>
+    </nav>
+</header>
     <div id="wrapper">
 
         <aside>
+            <img class="cercle" src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
             <h2>Présentation</h2>
-            <p>Bienvenu sur notre réseau social.</p>
+            <p>Bienvenu sur notre réseau social... Gollum Book.</p>
         </aside>
         <main>
             <article>
@@ -90,6 +95,11 @@
                         <option value="./assets/LOTR/gandalf.jpg">Gandalf</option>
                         <option value="./assets/LOTR/gimli.jpg">Gimli</option>
                         <option value="./assets/LOTR/saroumane.jpg">Saroumane</option>
+                        <option value="./assets/LOTR/sauron.jpg">Sauron</option>
+                        <option value="./assets/LOTR/sam.jpg">Sam</option>
+                        <option value="./assets/LOTR/eowyn.jpg">Eowyn</option>
+                        <option value="./assets/LOTR/theoden.jpg">Theoden</option>
+                        <option value="./assets/LOTR/urukhai.jpg">Urukhai</option>
                     </select>
                     <dl>
                         <dt><label for='pseudo'>Pseudo</label></dt>

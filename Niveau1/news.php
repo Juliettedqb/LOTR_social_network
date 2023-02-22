@@ -15,14 +15,15 @@
     <div id="wrapper">
         <aside>
 
-            <img src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
+            <img class="cercle" src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
             <section>
-                <h3>Présentation</h3>
-                <p>Sur cette page vous trouverez les derniers messages de
-                    tous les utilisatrices du site.</p>
-                <p>Météo à Nantes :</p>
+                <h3><strong>Présentation</strong></h3>
+                <p>Sur cette page vous trouverez les dix dernières publications</p>
+                <div class="meteo">
+                <h4>Météo au Mordor :</h4>
                 <p id="weather"></p>
                 <p id="weatherIcon"></p>
+                </div>
             </section>
         </aside>
         <main>
@@ -84,7 +85,7 @@
                         LEFT JOIN likes      ON likes.post_id  = posts.id 
                         GROUP BY posts.id
                         ORDER BY posts.created DESC  
-                        LIMIT 5
+                        LIMIT 10
                         ";
             $lesInformations = $mysqli->query($laQuestionEnSql);
             if (!$lesInformations) {
@@ -129,15 +130,15 @@
                                 <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="Like" value="True">
-                                    <input type='submit' value="Like">
+                                    <input class="button-60" role="button" type='submit' value="Sword">
                                 </form>
                             <?php
                             } else {
                                 ?>
-                                <form action="" method="post">
+                                <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="unLike" value="True">
-                                    <input type='submit' value="unLike">
+                                    <input class="button-60" role="button" type='submit' value="no Sword">
                                 </form>
                             <?php
                             }
@@ -154,3 +155,11 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+

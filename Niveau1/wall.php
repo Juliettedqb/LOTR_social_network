@@ -37,13 +37,11 @@
             $user = $lesInformations->fetch_assoc();
             //echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
-            <img src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
+            <img class="cercle" src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
             <section class="parchemin">
                 <h3>Présentation</h3>
-                <p>Sur cette page vous trouverez tous les message de l'utilisatrice :
+                <p>Sur cette page vous trouverez tous les message de
                     <?php echo $user['alias'] ?>
-                    (n°
-                    <?php echo $userId ?>)
                 </p>
                 <!-- Number of posts -->
                 <p>Nombre de message :
@@ -78,15 +76,15 @@
             /* echo "<pre>" . print_r($isFollowed, 1) . "</pre>"; */
             // FOLLOW BUTTON
             if (isset($idU) and $userId != $idU and !$isFollowed) { ?>
-                <form action="wall.php?user_id=<?php echo $userId ?>" method="post">
+                <form class="marginLeft" action="wall.php?user_id=<?php echo $userId ?>" method="post">
                     <input type="hidden" name="Follow" value="True">
-                    <input class="button-55" role="button" type='submit' value="Follow">
+                    <input class="button-60" role="button" type='submit' value="Follow">
                 </form>
             <?php
             } else if ($isFollowed) { ?>
-                    <form action="wall.php?user_id=<?php echo $userId ?>" method="post">
+                    <form class="marginLeft" action="wall.php?user_id=<?php echo $userId ?>" method="post">
                         <input type="hidden" name="unFollow" value="True">
-                        <input class="button-55" role="button" type='submit' value="unFollow">
+                        <input class="button-60" role="button" type='submit' value="unFollow">
                     </form>
             <?php
             } else {
@@ -95,94 +93,12 @@
 
         </aside>
         <main>
+        
+        <?php if($idU == $userId) { ?>
+
             <article class="papier">
                 <h2>Poster un message</h2>
-                <?php
-
-                // LIKE PART
-                $likePost = isset($_POST['Like']);
-                if ($likePost) {
-                    $postId = $_POST['postId'];
-                    $ajoutLike = "INSERT INTO likes "
-                        . "(id, user_id, post_id)"
-                        . "VALUES (NULL, "
-                        . $idU . ", "
-                        . $postId . ")"
-                    ;
-                    $ok = $mysqli->query($ajoutLike);
-                    if (!$ok) {
-                        echo ("Échec de la requete : " . $mysqli->error);
-                    } else {
-                        header("Refresh:0");
-                    }
-                }
-
-                // UNLIKE PART
-                $unLikePost = isset($_POST['unLike']);
-                if ($unLikePost) {
-                    $postId = $_POST['postId'];
-                    $unLike = "DELETE FROM likes WHERE user_id= '" . $idU . "' AND post_id= '$postId' ";
-                    $ok = $mysqli->query($unLike);
-                    if (!$ok) {
-                        echo ("Échec de la requete : " . $mysqli->error);
-                    } else {
-                        header("Refresh:0");
-                    }
-                }
-
-                // FOLLOW PART
-                $enCoursFollow = isset($_POST['Follow']);
-                if ($enCoursFollow) {
-                    $suivreUnePersonne = "INSERT INTO followers "
-                        . "(id, followed_user_id, following_user_id)"
-                        . "VALUES (NULL, "
-                        . $userId . ", "
-                        . $idU . ")"
-                    ;
-                    $ok = $mysqli->query($suivreUnePersonne);
-                    if (!$ok) {
-                        echo ("Échec de la requete : " . $mysqli->error);
-                    } else {
-                        echo ("Vous suivez cette personne !");
-                        header("Refresh:0");
-                    }
-                }
-
-                // UNFOLLOW PART
-                $enCoursUnFollow = isset($_POST['unFollow']);
-                if ($enCoursUnFollow) {
-                    $unFollow = "DELETE FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $idU . "' ";
-                    $ok = $mysqli->query($unFollow);
-                    if (!$ok) {
-                        echo ("Échec de la requete : " . $mysqli->error);
-                    } else {
-                        echo ("Vous ne suivez plus cette personne !");
-                        header("Refresh:0");
-                    }
-                }
-
-                // POST MESSAGE PART
-                $authorId = $idU;
-                $enCoursDeTraitement = isset($_POST['message']);
-                if ($enCoursDeTraitement) {
-                    $postContent = $_POST['message'];
-                    $authorId = intval($mysqli->real_escape_string($authorId));
-                    $postContent = $mysqli->real_escape_string($postContent);
-                    $lInstructionSql = "INSERT INTO posts "
-                        . "(id, user_id, content, created) "
-                        . "VALUES (NULL, "
-                        . $authorId . ", "
-                        . "'" . $postContent . "', "
-                        . "NOW())"
-                    ;
-                    $ok = $mysqli->query($lInstructionSql);
-                    if (!$ok) {
-                        echo "Impossible d'ajouter le message: " . $mysqli->error;
-                    } else {
-                        echo "Message posté en tant que :" . $authorId;
-                    }
-                }
-                ?>
+               
                 <form action="" method="post">
 
                     <dl><label for='message'>Message</label></dt>
@@ -191,7 +107,91 @@
                     <input class="button-55" role="button" type='submit'>
                 </form>
             </article>
+        <?php } ?>
+
             <?php
+             // LIKE PART
+             $likePost = isset($_POST['Like']);
+             if ($likePost) {
+                 $postId = $_POST['postId'];
+                 $ajoutLike = "INSERT INTO likes "
+                     . "(id, user_id, post_id)"
+                     . "VALUES (NULL, "
+                     . $idU . ", "
+                     . $postId . ")"
+                 ;
+                 $ok = $mysqli->query($ajoutLike);
+                 if (!$ok) {
+                     echo ("Échec de la requete : " . $mysqli->error);
+                 } else {
+                     header("Refresh:0");
+                 }
+             }
+
+             // UNLIKE PART
+             $unLikePost = isset($_POST['unLike']);
+             if ($unLikePost) {
+                 $postId = $_POST['postId'];
+                 $unLike = "DELETE FROM likes WHERE user_id= '" . $idU . "' AND post_id= '$postId' ";
+                 $ok = $mysqli->query($unLike);
+                 if (!$ok) {
+                     echo ("Échec de la requete : " . $mysqli->error);
+                 } else {
+                     header("Refresh:0");
+                 }
+             }
+
+             // FOLLOW PART
+             $enCoursFollow = isset($_POST['Follow']);
+             if ($enCoursFollow) {
+                 $suivreUnePersonne = "INSERT INTO followers "
+                     . "(id, followed_user_id, following_user_id)"
+                     . "VALUES (NULL, "
+                     . $userId . ", "
+                     . $idU . ")"
+                 ;
+                 $ok = $mysqli->query($suivreUnePersonne);
+                 if (!$ok) {
+                     echo ("Échec de la requete : " . $mysqli->error);
+                 } else {
+                     echo ("Vous suivez cette personne !");
+                     header("Refresh:0");
+                 }
+             }
+
+             // UNFOLLOW PART
+             $enCoursUnFollow = isset($_POST['unFollow']);
+             if ($enCoursUnFollow) {
+                 $unFollow = "DELETE FROM followers WHERE followed_user_id= '$userId' AND following_user_id= '" . $idU . "' ";
+                 $ok = $mysqli->query($unFollow);
+                 if (!$ok) {
+                     echo ("Échec de la requete : " . $mysqli->error);
+                 } else {
+                     echo ("Vous ne suivez plus cette personne !");
+                     header("Refresh:0");
+                 }
+             }
+
+             // POST MESSAGE PART
+             $authorId = $idU;
+             $enCoursDeTraitement = isset($_POST['message']);
+             if ($enCoursDeTraitement) {
+                 $postContent = $_POST['message'];
+                 $authorId = intval($mysqli->real_escape_string($authorId));
+                 $postContent = $mysqli->real_escape_string($postContent);
+                 $lInstructionSql = "INSERT INTO posts "
+                     . "(id, user_id, content, created) "
+                     . "VALUES (NULL, "
+                     . $authorId . ", "
+                     . "'" . $postContent . "', "
+                     . "NOW())"
+                 ;
+                 $ok = $mysqli->query($lInstructionSql);
+                 if (!$ok) {
+                     echo "Impossible d'ajouter le message: " . $mysqli->error;
+                 } 
+             }
+        
             // SELECT POST ID 
             $laQuestionEnSql = "
                     SELECT posts.content, posts.created, posts.id, users.alias as author_name,
@@ -247,7 +247,7 @@
                                 <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="Like" value="True">
-                                    <input type='submit' value="Like"> 
+                                    <input class="button-60" role="button" type='submit' value="Sword"> 
                                 </form>
                             <?php
                             } else {
@@ -255,7 +255,7 @@
                                 <form class="like" action="" method="post">
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="unLike" value="True">
-                                    <input type='submit' value="unLike">
+                                    <input class="button-60" role="button" type='submit' value="no Sword">
                                 </form>
                             <?php
                             }

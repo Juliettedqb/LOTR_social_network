@@ -18,6 +18,10 @@
         $userId = intval($_GET['user_id']);
         ?>
 
+        <?php if ($idU != $userId) {
+            header("Location: wall.php?user_id=" . $idU);
+        }
+        ?>
 
         <aside>
             <?php
@@ -26,15 +30,15 @@
             $user = $lesInformations->fetch_assoc();
             //echo "<pre>" . print_r($user, 1) . "</pre>";
             ?>
-            <img src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
+            <img class="cercle" src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
             <section>
                 <h3>Présentation</h3>
-                <p>Sur cette page vous trouverez les informations de l'utilisateur.ice
-                    n°
-                    <?php echo intval($_GET['user_id']) ?>
+                <p>Sur cette page vous trouverez les informations de
+                    <?php echo $user['alias'] ?>
                 </p>
 
                 <?php
+                // CHANGE PP PART
                 $enCoursNewImage = isset($_POST['newImage']);
                 //echo "<pre>" . print_r($_POST['newImage'], 1) . "</pre>";
                 if ($enCoursNewImage) {
@@ -47,6 +51,18 @@
                     }
                 }
 
+                // CHANGE USERNAME PART
+                $enCoursNewUsername = isset($_POST['newUsername']);
+                //echo "<pre>" . print_r($_POST['newUsername'], 1) . "</pre>";
+                if ($enCoursNewUsername) {
+                    $newUsername = "UPDATE users SET alias = '" . $_POST['newUsername'] . "' WHERE id = '$userId'";
+                    $ok = $mysqli->query($newUsername);
+                    if (!$ok) {
+                        echo ("Échec de la requete : " . $mysqli->error);
+                    } else {
+                        header("Refresh:0");
+                    }
+                }
                 ?>
 
                 <p>Pour modifier votre photo de profil :
@@ -63,11 +79,26 @@
                         <option value="./assets/LOTR/gandalf.jpg">Gandalf</option>
                         <option value="./assets/LOTR/gimli.jpg">Gimli</option>
                         <option value="./assets/LOTR/saroumane.jpg">Saroumane</option>
+                        <option value="./assets/LOTR/sauron.jpg">Sauron</option>
+                        <option value="./assets/LOTR/sam.jpg">Sam</option>
+                        <option value="./assets/LOTR/eowyn.jpg">Eowyn</option>
+                        <option value="./assets/LOTR/theoden.jpg">Theoden</option>
+                        <option value="./assets/LOTR/urukhai.jpg">Urukhai</option>
                     </select>
-                    <input type='submit'>
+                    <input class="button-60" role="button" type='submit'>
                 </form>
                 </p>
 
+                <!-- CHANGE USERNAME PART -->
+                <form action="" method="post">
+                    <input class="change_username" type="text" size="10" name="newUsername" placeholder=" New Pseudo">
+                    <input class="button-60" role="button" type='submit' value='Changer de pseudo'>
+                </form>
+                <br>
+                <!-- CHANGE PASSWORD PART -->
+                <form action="./changepassword.php" method="post">
+                    <input class="button-60" role="button" type='submit' value='Changer de mot de passe'>
+                </form>
 
             </section>
         </aside>
@@ -129,12 +160,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-

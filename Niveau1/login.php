@@ -12,28 +12,35 @@
         <link rel="stylesheet" href="style.css"/>
     </head>
     <body>
-        <header>
-            <img src="resoc.jpg" alt="Logo de notre réseau social"/>
-            <nav id="menu">
-                <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
-                <a href="tags.php?tag_id=1">Mots-clés</a>
-            </nav>
-            <nav id="user">
-                <a href="#">Profil</a>
-                <ul>
-                    <li><a href="settings.php?user_id=5">Paramètres</a></li>
-                    <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
-                </ul>
-            </nav>
-        </header>
+    <header>
+    <img src="./assets/LOTR/gollumLogo2.webp" alt="Logo de notre réseau social"/>
+    
+    <nav id="menu">
+        <p id=title>Gollum <br>Book</p>
+        <a href="news.php"><button class="button-62" role="button">News</button></a>
+        <a href="wall.php?user_id=<?php echo $idU ?>"><button class="button-62" role="button">My Page</button></a>
+        <!-- RESEARCH BAR -->
+        <a class="search-a">
+            <form id= "searchbox" action="" method="post">
+                <input class="research" type="text" size= "40" name="search" placeholder=" Rechercher un utilisateur">
+                <input class="button-submit" type="submit" value="🔍">
+            </form>
+        </a>
+    </nav>
+    <nav id="user">
+        <a href="#">Profil ▼</a>
+        <ul>
+            <li><a href="settings.php?user_id=<?php echo $idU ?>">Paramètres</a></li>
+            <li><a href="disconnect.php">Disconnect</a></li>
+        </ul>
+    </nav>
+</header>
 
         <div id="wrapper" >
             <aside>
+                <img class="cercle" src="./assets/LOTR/ring.jpg" alt="Portrait de l'utilisatrice" />
                 <h2>Présentation</h2>
-                <p>Bienvenu sur notre réseau social.</p>
+                <p>Connectez-vous à votre compte Gollum Book.</p>
             </aside>
             <main>
                 <article>
@@ -71,11 +78,11 @@
                             <dt><label for='motpasse'>Mot de passe</label></dt>
                             <dd><input type='password'name='motpasse'></dd>
                         </dl>
-                        <input type='submit'>
-                    </form>
+                        <input value="Login" type='submit'>
+                    </form><br>
                     <p>
                         Pas de compte?
-                        <a href='registration.php'>Inscrivez-vous.</a>
+                        <a class="dark_link" href='registration.php'>Inscrivez-vous.</a>
                     </p>
 
                 </article>
