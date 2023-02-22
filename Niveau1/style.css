@@ -473,8 +473,15 @@ form dl dd textarea{width:45em;height: 5em ;}
     border-radius: 10px;
 }
 
-
-
+.deleteButton{
+    font-size: 20px;
+    position: relative;
+    left: 35em;
+    bottom: 1.7rem;
+    right: 0px;
+    height: 20px;
+    width: 0px;
+}
 
 
 

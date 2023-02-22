@@ -30,6 +30,30 @@
             <?php
             include("fonctions.php");
 
+            // DELETE MESSAGE PART
+            $deletePost = isset($_POST['postSupprimer']);
+
+            if ($deletePost) {
+                // DELETE LIKE FROM THIS POST
+                $deleteLike = "DELETE FROM likes WHERE post_id= '$postId' ";
+                $ok = $mysqli->query($deleteLike);
+                if (!$ok) {
+                    echo ("Échec de la requete : " . $mysqli->error);
+                } else {
+                    header("Refresh:0");
+                }
+                
+                // DELETE POST
+                $postId = $_POST['postSupprimer'];
+                $deletePost = "DELETE FROM posts WHERE id= '$postId' ";
+                $ok = $mysqli->query($deletePost);
+                if (!$ok) {
+                    echo ("Échec de la requete : " . $mysqli->error);
+                } else {
+                    header("Refresh:0");
+                }
+            }
+
             // LIKE PART
             $likePost = isset($_POST['Like']);
             if ($likePost) {
@@ -139,6 +163,16 @@
                                     <input type="hidden" name="postId" value="<?php echo $post['id'] ?>">
                                     <input type="hidden" name="unLike" value="True">
                                     <input class="button-60" role="button" type='submit' value="no Sword">
+                                </form>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if ($idU == $post['author_id']) {
+                                ?>
+                                <form class="deleteButton" action="" method="post">
+                                    <input type="hidden" name="postSupprimer" value="<?php echo $post['id'] ?>">
+                                    <input class="button-60" role="button" type='submit' value="Supprimer">
                                 </form>
                             <?php
                             }
