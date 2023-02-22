@@ -19,11 +19,11 @@
         <?php
         include("fonctions.php");
         ?>
-         <?php
-            $laQuestionEnSql = "SELECT * FROM users WHERE id= '$userId' ";
-            $lesInformations = $mysqli->query($laQuestionEnSql);
-            $user = $lesInformations->fetch_assoc();
-            ?>
+        <?php
+        $laQuestionEnSql = "SELECT * FROM users WHERE id= '$userId' ";
+        $lesInformations = $mysqli->query($laQuestionEnSql);
+        $user = $lesInformations->fetch_assoc();
+        ?>
         <aside>
             <img src="<?php echo $user['image'] ?>" alt="Portrait de l'utilisatrice" />
             <section>

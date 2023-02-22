@@ -16,6 +16,7 @@ if ($user) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,22 +24,26 @@ if ($user) {
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class="container container-glob">
         <div class="container container-password">
-        <h2>Changer le mot de passe de <?php echo $idU ?></h2>
-        <form action="changepassword.php" method="post" id="form-container">
-            <input type="password" name="oldpassword" id="password" placeholder="Ancien mot de passe">
-            <br>
-            <input type="password" name="newpassword" id="password" placeholder="Nouveau mot de passe">
-            <br>
-            <input type="password" name="newpassword2" id="password" placeholder="Confirmer le mot de passe">
-            <br><br>
-            <input type="submit" value="Changer le mot de passe" id="submit-password">
-        </form>
+            <h2>Changer le mot de passe de
+                <?php echo $idU ?>
+            </h2>
+            <form action="changepassword.php" method="post" id="form-container">
+                <input type="password" name="oldpassword" id="password" placeholder="Ancien mot de passe">
+                <br>
+                <input type="password" name="newpassword" id="password" placeholder="Nouveau mot de passe">
+                <br>
+                <input type="password" name="newpassword2" id="password" placeholder="Confirmer le mot de passe">
+                <br><br>
+                <input type="submit" value="Changer le mot de passe" id="submit-password">
+            </form>
         </div>
     </div>
 </body>
+
 </html>
 
 <?php

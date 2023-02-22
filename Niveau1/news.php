@@ -20,9 +20,9 @@
                 <h3><strong>Présentation</strong></h3>
                 <p>Sur cette page vous trouverez les dix dernières publications</p>
                 <div class="meteo">
-                <h4>Météo au Mordor :</h4>
-                <p id="weather"></p>
-                <p id="weatherIcon"></p>
+                    <h4>Météo au Mordor :</h4>
+                    <p id="weather"></p>
+                    <p id="weatherIcon"></p>
                 </div>
             </section>
         </aside>
@@ -42,7 +42,7 @@
                 } else {
                     header("Refresh:0");
                 }
-                
+
                 // DELETE POST
                 $postId = $_POST['postSupprimer'];
                 $deletePost = "DELETE FROM posts WHERE id= '$postId' ";
@@ -120,14 +120,14 @@
             }
 
             while ($post = $lesInformations->fetch_assoc()) {
-                /* echo "<pre>" . print_r($post, 1) . "</pre>"; */ ?>
+                /* echo "<pre>" . print_r($post, 1) . "</pre>"; */?>
                 <article>
                     <img id="osef" src="<?php echo $post['author_image'] ?>" alt="blason" />
                     <style>
                         #osef {
-                            float:right;
+                            float: right;
                             height: 3.2em;
-                            border-radius:50%;
+                            border-radius: 50%;
                         }
                     </style>
                     <h3>
@@ -144,7 +144,8 @@
                     <footer>
                         <small>
                             <small>
-                            ⚔️<?php echo $post['like_number'] ?>
+                                ⚔️
+                                <?php echo $post['like_number'] ?>
                             </small>
                             <?php
                             $checkLike = "SELECT * FROM likes WHERE user_id= '" . $_SESSION['connected_id'] . "' AND post_id= '" . $post['id'] . "' ";
@@ -189,11 +190,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
