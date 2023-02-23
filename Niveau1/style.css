@@ -132,6 +132,7 @@ body > header #user {
   flex: 0.2;
   border-left: 1px solid #2c2c2c;
 }
+
 body > header #user > a {
   display: block;
   text-align: center;
@@ -156,6 +157,7 @@ body > header #user ul li a {
   display: block;
   width: 7.5em;
   padding: 1em;
+  border-radius: 20px;
 }
 body > header #user:hover ul {
   display: block;
