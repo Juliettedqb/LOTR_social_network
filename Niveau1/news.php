@@ -35,6 +35,7 @@
 
             if ($deletePost) {
                 // DELETE LIKE FROM THIS POST
+                $postId = $_POST['postSupprimer'];
                 $deleteLike = "DELETE FROM likes WHERE post_id= '$postId' ";
                 $ok = $mysqli->query($deleteLike);
                 if (!$ok) {
@@ -44,7 +45,7 @@
                 }
 
                 // DELETE POST
-                $postId = $_POST['postSupprimer'];
+                
                 $deletePost = "DELETE FROM posts WHERE id= '$postId' ";
                 $ok = $mysqli->query($deletePost);
                 if (!$ok) {
