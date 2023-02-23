@@ -53,7 +53,7 @@
                     <style>
                         #osef {
                             float: right;
-                            height: 6.2em;
+                            height: 5.2em;
                             border-radius: 50%;
                         }
                     </style>
