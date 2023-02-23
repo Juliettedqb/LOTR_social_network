@@ -49,7 +49,14 @@
             while ($user = $lesInformations->fetch_assoc()) {
                 //echo "<pre>" . print_r($user, 1) . "</pre>"; ?>
                 <article>
-                    <img src="<?php echo $user['image'] ?>" alt="blason" />
+                <img id="osef"src="<?php echo $user['image'] ?>" alt="blason" />
+                    <style>
+                        #osef {
+                            float: right;
+                            height: 6.2em;
+                            border-radius: 50%;
+                        }
+                    </style>
                     <h3>
                         <a class="dark_link" href="wall.php?user_id=<?php echo $user['id'] ?>">
                             <?php echo $user['alias'] ?>

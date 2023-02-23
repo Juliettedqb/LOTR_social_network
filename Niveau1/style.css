@@ -238,6 +238,7 @@ body > header #user:hover ul {
   padding-left: 3em;
 }
 #wrapper main article {
+    border-radius: 10px;
   background-image: none;
   background-color: white;
   padding: 2em;
